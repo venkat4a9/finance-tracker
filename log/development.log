@@ -1,0 +1,469 @@
+  [1m[36m (97.8ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.2ms)[0m  select sqlite_version(*)
+  [1m[36m (100.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to DeviseCreateUsers (20151013130230)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151013130230"]]
+  [1m[36m (106.2ms)[0m  [1mcommit transaction[0m
+Migrating to CreateStocks (20151013141910)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.5ms)[0m  [1mCREATE TABLE "stocks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "ticker" varchar, "name" varchar, "last_price" decimal, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151013141910"]]
+  [1m[36m (104.8ms)[0m  [1mcommit transaction[0m
+Migrating to CreateUserStocks (20151013191743)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "user_stocks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "stock_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20151013191743"]]
+  [1m[36m (97.3ms)[0m  [1mcommit transaction[0m
+Migrating to AddFirstAndLastNameToUsers (20151013220552)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "users" ADD "first_name" varchar[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "users" ADD "last_name" varchar
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151013220552"]]
+  [1m[35m (73.4ms)[0m  commit transaction
+Migrating to CreateFriendships (20151014132846)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  CREATE TABLE "friendships" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "friend_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20151014132846"]]
+  [1m[35m (77.1ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+
+
+Started GET "/" for 127.0.0.1 at 2017-04-20 17:12:40 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+Completed 401 Unauthorized in 14ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-04-20 17:12:40 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (1.6ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (18.8ms)
+  Rendered layouts/_navigation.html.erb (1.4ms)
+Completed 200 OK in 1344ms (Views: 1331.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/devise_bootstrap_views.self-16e21885384c9a8450196be875c830685c6797bd79b7f5f2bf89b01ef6e1dc72.css?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter-bootstrap-static/bootstrap.self-77d963462a71b85aa6c39f0110994006fed4301154d937da52eb3884ff813853.css?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/custom.self-9233676a34d3d7f90bf821fe9e78d376572942a3cc866518e16660c829d82b02.css?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter-bootstrap-static/fontawesome.self-c1a8821f7eb1b195061d7706930814ecc6bd44db4c68f208da5fe14845fa11ea.css?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/scaffolds.self-14751eae01ab5857b0af1795db6d809cc40b61c701e33b44dc0c5954a7c539bb.css?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/user_stocks.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/jquery.self-a714331225dda820228db323939889f149aec0127aeb06255646b616ba1ca419.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/jquery_ujs.self-d456baa54c1fa6be2ec3711f0a72ddf7a5b2f34a6b4f515f33767d6207b7d4b3.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/alert.self-ebce91ec66c71bcee451ea7da9128fd1bf8faa02c6d22ea04c598423431e4c08.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/transition.self-db278e3a8fa6249c16796b113ebd29e11ef4e2cd021618ed84895d524a4511e0.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/modal.self-ab1767545e27c0dbd36971e656ae4927171f673e3d932cdec2cbef39e991952b.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/dropdown.self-8bb9309b6c24a4ba6b94026a049d25b13bdc0553b6fe83255c14a715ba624cc4.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/scrollspy.self-bd0c6724cdc75302fe98dfeff923112b76c1673cf4a0752a7050b7feea15594c.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/tab.self-7e3ee4a243bb416b5f0111a0be08f8547c5d72ba71fe4afe4a4a007f5cb4e10e.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/tooltip.self-d7f9330825307d053f68da11bb9ddc9b070df72deef3d115f2f3d55f66b17457.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/popover.self-cd672ecad3b549e1dbd89bfd044e5812d6fdade56f42d48e3acee0c3f4614526.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/button.self-ceb562de883e04359bb2c06f07bdf6ecf065cc8a5027e2e58857c5e91b0b68e3.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/collapse.self-a87553101c955a01e2e8c81fad69a16582ddbf58fe95d5eb335dde5567af7647.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/carousel.self-5d09995e01b647168888180d40e271f9a6759d68ae7ac029d7026af58813d376.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/twitter/bootstrap/affix.self-14e04bbe71282aa039322ab93e3a3a886ddede5f59a2f365f7c861f697bbeb21.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/friends.self-1d0e3d526297978cae97c2727e94efc218ae2b696f1873c6abe001eb7edaec0c.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/stocks.self-01ea3ed190fcad1afb25b6bafbd08601dc5dbc6d7181891ca7704e34243525ba.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/user_stocks.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:41 +0530
+
+
+Started GET "/assets/application.self-ba1f2e0b8299241b0dc308f19a7947e86cd924db1d324e5d71954b37de3838c2.js?body=1" for 127.0.0.1 at 2017-04-20 17:12:42 +0530
+
+
+Started GET "/images/favicon.ico" for 127.0.0.1 at 2017-04-20 17:12:42 +0530
+
+ActionController::RoutingError (No route matches [GET] "/images/favicon.ico"):
+  actionpack (4.2.3) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+  web-console (2.2.1) lib/web_console/middleware.rb:39:in `call'
+  actionpack (4.2.3) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.3) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.3) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.3) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.3) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.3) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.3) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.3) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.3) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.3) lib/action_dispatch/middleware/static.rb:116:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.3) lib/rails/engine.rb:518:in `call'
+  railties (4.2.3) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /home/cgm/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /home/cgm/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /home/cgm/.rvm/rubies/ruby-2.3.1/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.3/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.6ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.3/lib/action_dispatch/middleware/templates/routes/_route.html.erb (4.4ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.3/lib/action_dispatch/middleware/templates/routes/_table.html.erb (2.4ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.3/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.3ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/actionpack-4.2.3/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (40.6ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/_markup.html.erb (0.3ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/style.css.erb within layouts/inlined_string (1.0ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/console.js.erb within layouts/javascript (21.6ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/main.js.erb within layouts/javascript (0.2ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /home/cgm/.rvm/gems/ruby-2.3.1/gems/web-console-2.2.1/lib/web_console/templates/index.html.erb (39.3ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2017-04-20 17:12:53 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"qYSQnML1by5Ru0L7CWPOi7ekgh7vVZb4C6yYxAuLRIAfTfzPnUzCvg5vBFecPLEwadGI9TRIBfwSXmJpzpJyWg==", "user"=>{"email"=>"venkat@cgmeetup.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["email", "venkat@cgmeetup.com"]]
+Completed 401 Unauthorized in 11ms (ActiveRecord: 0.7ms)
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"qYSQnML1by5Ru0L7CWPOi7ekgh7vVZb4C6yYxAuLRIAfTfzPnUzCvg5vBFecPLEwadGI9TRIBfwSXmJpzpJyWg==", "user"=>{"email"=>"venkat@cgmeetup.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  Rendered devise/shared/_links.html.erb (0.3ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (3.9ms)
+  Rendered layouts/_navigation.html.erb (0.2ms)
+Completed 200 OK in 226ms (Views: 148.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2017-04-20 17:12:55 +0530
+Processing by User::RegistrationsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.4ms)
+  Rendered devise/registrations/new.html.erb within layouts/application (6.3ms)
+  Rendered layouts/_navigation.html.erb (0.8ms)
+Completed 200 OK in 173ms (Views: 170.6ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for 127.0.0.1 at 2017-04-20 17:13:09 +0530
+Processing by User::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"4bGMEPeYu4SX6bHn1O//M8Yj+BiHQ+9TzSsorqcYfh9XeOBDqCEWFMg990tBsICIGFby81xefFfU2dIDYgFIxQ==", "user"=>{"email"=>"venkat@cgmeetup.com", "first_name"=>"venkat", "last_name"=>"reddy", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE "users"."email" = 'venkat@cgmeetup.com' LIMIT 1
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "users" ("email", "encrypted_password", "first_name", "last_name", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "venkat@cgmeetup.com"], ["encrypted_password", "$2a$10$1CVebYGyvANCVrxR25HL3eW8HHitCx4DiKyCyUz3BLaidtcWBFlsa"], ["first_name", "venkat"], ["last_name", "reddy"], ["created_at", "2017-04-20 11:43:09.101877"], ["updated_at", "2017-04-20 11:43:09.101877"]]
+  [1m[35m (62.4ms)[0m  commit transaction
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  UPDATE "users" SET "last_sign_in_at" = ?, "current_sign_in_at" = ?, "last_sign_in_ip" = ?, "current_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = ?  [["last_sign_in_at", "2017-04-20 11:43:09.168020"], ["current_sign_in_at", "2017-04-20 11:43:09.168020"], ["last_sign_in_ip", "127.0.0.1"], ["current_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2017-04-20 11:43:09.169729"], ["id", 1]]
+  [1m[36m (69.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 235ms (ActiveRecord: 132.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-04-20 17:13:09 +0530
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered welcome/index.html.erb within layouts/application (0.3ms)
+  Rendered layouts/_navigation.html.erb (0.8ms)
+Completed 200 OK in 154ms (Views: 152.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/assets/fontawesome-webfont-66db52b456efe7e29cec11fa09421d03cb09e37ed1b567307ec0444fd605ce31.woff" for 127.0.0.1 at 2017-04-20 17:13:09 +0530
+
+
+Started GET "/my_portfolio" for 127.0.0.1 at 2017-04-20 17:13:19 +0530
+Processing by UsersController#my_portfolio as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered common/_spinner.html.erb (0.2ms)
+  Rendered stocks/_lookup.html.erb (3.1ms)
+  [1m[35mStock Load (0.2ms)[0m  SELECT "stocks".* FROM "stocks" INNER JOIN "user_stocks" ON "stocks"."id" = "user_stocks"."stock_id" WHERE "user_stocks"."user_id" = ?  [["user_id", 1]]
+  Rendered stocks/_list.html.erb (4.6ms)
+  Rendered users/my_portfolio.html.erb within layouts/application (9.7ms)
+  Rendered layouts/_navigation.html.erb (0.6ms)
+Completed 200 OK in 189ms (Views: 159.5ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/search_stocks?utf8=%E2%9C%93&stock=GOOG&button=" for 127.0.0.1 at 2017-04-20 17:13:23 +0530
+Processing by StocksController#search as JS
+  Parameters: {"utf8"=>"✓", "stock"=>"GOOG", "button"=>""}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mStock Load (0.4ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "GOOG"]]
+  Rendered common/_spinner.html.erb (0.2ms)
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "user_stocks" WHERE "user_stocks"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "GOOG"]]
+  Rendered stocks/_lookup.html.erb (1833.1ms)
+Completed 200 OK in 4678ms (Views: 1837.1ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/user_stocks?stock_id=&stock_ticker=GOOG&user=1" for 127.0.0.1 at 2017-04-20 17:13:30 +0530
+Processing by UserStocksController#create as HTML
+  Parameters: {"authenticity_token"=>"CFRHunDunYafJsqQokJ6wfspUsOL0jt3Odt1SaLdjeK+nSvpL1cwFsDyjDw3HQV6JVxYKFDPqHMgKY/kZ8S7OA==", "stock_id"=>"", "stock_ticker"=>"GOOG", "user"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mStock Load (0.1ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "GOOG"]]
+  [1m[36m (0.3ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "stocks" ("ticker", "name", "last_price", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["ticker", "GOOG"], ["name", "Alphabet Inc."], ["last_price", 839.79], ["created_at", "2017-04-20 11:43:33.329569"], ["updated_at", "2017-04-20 11:43:33.329569"]]
+  [1m[36m (85.3ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "user_stocks" ("user_id", "stock_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["stock_id", 1], ["created_at", "2017-04-20 11:43:33.433322"], ["updated_at", "2017-04-20 11:43:33.433322"]]
+  [1m[35m (64.9ms)[0m  commit transaction
+Redirected to http://localhost:3000/my_portfolio
+Completed 302 Found in 2851ms (ActiveRecord: 151.3ms)
+
+
+Started GET "/my_portfolio" for 127.0.0.1 at 2017-04-20 17:13:33 +0530
+Processing by UsersController#my_portfolio as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered common/_spinner.html.erb (0.0ms)
+  Rendered stocks/_lookup.html.erb (1.7ms)
+  [1m[35mStock Load (0.1ms)[0m  SELECT "stocks".* FROM "stocks" INNER JOIN "user_stocks" ON "stocks"."id" = "user_stocks"."stock_id" WHERE "user_stocks"."user_id" = ?  [["user_id", 1]]
+  Rendered stocks/_list.html.erb (1903.5ms)
+  Rendered users/my_portfolio.html.erb within layouts/application (1906.2ms)
+  Rendered layouts/_navigation.html.erb (0.7ms)
+Completed 200 OK in 2078ms (Views: 2074.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/search_stocks?utf8=%E2%9C%93&stock=TW&button=" for 127.0.0.1 at 2017-04-20 17:13:40 +0530
+Processing by StocksController#search as JS
+  Parameters: {"utf8"=>"✓", "stock"=>"TW", "button"=>""}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mStock Load (0.1ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "TW"]]
+  Rendered common/_spinner.html.erb (0.0ms)
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "user_stocks" WHERE "user_stocks"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "TW"]]
+  Rendered stocks/_lookup.html.erb (1837.1ms)
+Completed 200 OK in 4641ms (Views: 1840.6ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/user_stocks?stock_id=&stock_ticker=TW&user=1" for 127.0.0.1 at 2017-04-20 17:13:46 +0530
+Processing by UserStocksController#create as HTML
+  Parameters: {"authenticity_token"=>"oH3aRX6vuycRNLrYVYBb9eI7v1WZQNYis79O7+zeaRYWtLYWIRYWt07g/HTA3yROPE61vkJdRSaqTbRCKcdfzA==", "stock_id"=>"", "stock_ticker"=>"TW", "user"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mStock Load (0.1ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "TW"]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "stocks" ("ticker", "name", "last_price", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["ticker", "TW"], ["name", "Towers Watson & Co."], ["last_price", 0.0], ["created_at", "2017-04-20 11:43:48.650828"], ["updated_at", "2017-04-20 11:43:48.650828"]]
+  [1m[36m (72.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "user_stocks" ("user_id", "stock_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["stock_id", 2], ["created_at", "2017-04-20 11:43:48.726102"], ["updated_at", "2017-04-20 11:43:48.726102"]]
+  [1m[35m (71.7ms)[0m  commit transaction
+Redirected to http://localhost:3000/my_portfolio
+Completed 302 Found in 2784ms (ActiveRecord: 145.2ms)
+
+
+Started GET "/my_portfolio" for 127.0.0.1 at 2017-04-20 17:13:48 +0530
+Processing by UsersController#my_portfolio as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered common/_spinner.html.erb (0.0ms)
+  Rendered stocks/_lookup.html.erb (0.8ms)
+  [1m[35mStock Load (0.1ms)[0m  SELECT "stocks".* FROM "stocks" INNER JOIN "user_stocks" ON "stocks"."id" = "user_stocks"."stock_id" WHERE "user_stocks"."user_id" = ?  [["user_id", 1]]
+  Rendered stocks/_list.html.erb (3520.4ms)
+  Rendered users/my_portfolio.html.erb within layouts/application (3522.3ms)
+  Rendered layouts/_navigation.html.erb (0.5ms)
+Completed 200 OK in 3687ms (Views: 3682.6ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/search_stocks?utf8=%E2%9C%93&stock=BP&button=" for 127.0.0.1 at 2017-04-20 17:13:56 +0530
+Processing by StocksController#search as JS
+  Parameters: {"utf8"=>"✓", "stock"=>"BP", "button"=>""}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mStock Load (0.0ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "BP"]]
+  Rendered common/_spinner.html.erb (0.0ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "user_stocks" WHERE "user_stocks"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35mCACHE (0.0ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "BP"]]
+  Rendered stocks/_lookup.html.erb (1776.9ms)
+Completed 200 OK in 4428ms (Views: 1780.7ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/user_stocks?stock_id=&stock_ticker=BP&user=1" for 127.0.0.1 at 2017-04-20 17:14:02 +0530
+Processing by UserStocksController#create as HTML
+  Parameters: {"authenticity_token"=>"QWPwx1o1ZdyLGiA5kSC46O4ctuZHa6K4vNKlhYc9wg/3qpyUBYzITNTOZpUEf8dTMGm8DZx2MbylIF8oQiT01Q==", "stock_id"=>"", "stock_ticker"=>"BP", "user"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mStock Load (0.1ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "BP"]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "stocks" ("ticker", "name", "last_price", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)  [["ticker", "BP"], ["name", "BP p.l.c. Common Stock"], ["last_price", 34.61], ["created_at", "2017-04-20 11:44:04.889206"], ["updated_at", "2017-04-20 11:44:04.889206"]]
+  [1m[36m (75.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "user_stocks" ("user_id", "stock_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["stock_id", 3], ["created_at", "2017-04-20 11:44:04.967403"], ["updated_at", "2017-04-20 11:44:04.967403"]]
+  [1m[35m (63.6ms)[0m  commit transaction
+Redirected to http://localhost:3000/my_portfolio
+Completed 302 Found in 2833ms (ActiveRecord: 139.8ms)
+
+
+Started GET "/my_portfolio" for 127.0.0.1 at 2017-04-20 17:14:05 +0530
+Processing by UsersController#my_portfolio as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered common/_spinner.html.erb (0.0ms)
+  Rendered stocks/_lookup.html.erb (1.3ms)
+  [1m[35mStock Load (0.1ms)[0m  SELECT "stocks".* FROM "stocks" INNER JOIN "user_stocks" ON "stocks"."id" = "user_stocks"."stock_id" WHERE "user_stocks"."user_id" = ?  [["user_id", 1]]
+  Rendered stocks/_list.html.erb (5620.7ms)
+  Rendered users/my_portfolio.html.erb within layouts/application (5622.9ms)
+  Rendered layouts/_navigation.html.erb (0.6ms)
+Completed 200 OK in 5790ms (Views: 5787.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/search_stocks?utf8=%E2%9C%93&stock=fhjyjyjjtjktktk&button=" for 127.0.0.1 at 2017-04-20 17:14:33 +0530
+Processing by StocksController#search as JS
+  Parameters: {"utf8"=>"✓", "stock"=>"fhjyjyjjtjktktk", "button"=>""}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35mStock Load (0.1ms)[0m  SELECT  "stocks".* FROM "stocks" WHERE "stocks"."ticker" = ?  ORDER BY "stocks"."id" ASC LIMIT 1  [["ticker", "fhjyjyjjtjktktk"]]
+  Rendered text template (0.0ms)
+Completed 404 Not Found in 1000ms (Views: 2.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/users/edit" for 127.0.0.1 at 2017-04-20 17:14:41 +0530
+Processing by User::RegistrationsController#edit as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered devise/registrations/edit.html.erb within layouts/application (7.3ms)
+  Rendered layouts/_navigation.html.erb (0.5ms)
+Completed 200 OK in 167ms (Views: 163.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/my_friends" for 127.0.0.1 at 2017-04-20 17:14:43 +0530
+Processing by UsersController#my_friends as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered common/_spinner.html.erb (0.0ms)
+  Rendered friends/_lookup.html.erb (3.1ms)
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "users" INNER JOIN "friendships" ON "users"."id" = "friendships"."friend_id" WHERE "friendships"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered users/my_friends.html.erb within layouts/application (6.8ms)
+  Rendered layouts/_navigation.html.erb (1.0ms)
+Completed 200 OK in 158ms (Views: 149.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/search_friends?utf8=%E2%9C%93&search_param=venkat&button=" for 127.0.0.1 at 2017-04-20 17:14:48 +0530
+Processing by UsersController#search as JS
+  Parameters: {"utf8"=>"✓", "search_param"=>"venkat", "button"=>""}
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE (lower(first_name) like '%venkat%')[0m
+  [1m[35mUser Load (0.2ms)[0m  SELECT "users".* FROM "users" WHERE (lower(last_name) like '%venkat%')
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE (lower(email) like '%venkat%')[0m
+  Rendered common/_spinner.html.erb (0.1ms)
+  Rendered friends/_lookup.html.erb (7.6ms)
+Completed 200 OK in 16ms (Views: 11.6ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/search_friends?utf8=%E2%9C%93&search_param=mushrur&button=" for 127.0.0.1 at 2017-04-20 17:15:08 +0530
+Processing by UsersController#search as JS
+  Parameters: {"utf8"=>"✓", "search_param"=>"mushrur", "button"=>""}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE (lower(first_name) like '%mushrur%')[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE (lower(last_name) like '%mushrur%')
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT "users".* FROM "users" WHERE (lower(email) like '%mushrur%')[0m
+  Rendered common/_spinner.html.erb (0.1ms)
+  Rendered friends/_lookup.html.erb (3.5ms)
+Completed 200 OK in 12ms (Views: 7.3ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/search_friends?utf8=%E2%9C%93&search_param=mushrur&button=" for 127.0.0.1 at 2017-04-20 17:15:11 +0530
+Processing by UsersController#search as JS
+  Parameters: {"utf8"=>"✓", "search_param"=>"mushrur", "button"=>""}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT "users".* FROM "users" WHERE (lower(first_name) like '%mushrur%')[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users" WHERE (lower(last_name) like '%mushrur%')
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT "users".* FROM "users" WHERE (lower(email) like '%mushrur%')[0m
+  Rendered common/_spinner.html.erb (0.0ms)
+  Rendered friends/_lookup.html.erb (3.2ms)
+Completed 200 OK in 11ms (Views: 6.6ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-04-20 17:15:17 +0530
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 1]]
+  Rendered welcome/index.html.erb within layouts/application (0.0ms)
+  Rendered layouts/_navigation.html.erb (0.9ms)
+Completed 200 OK in 162ms (Views: 160.8ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/my_portfolio" for 127.0.0.1 at 2017-04-20 17:15:19 +0530
+Processing by UsersController#my_portfolio as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  Rendered common/_spinner.html.erb (0.0ms)
+  Rendered stocks/_lookup.html.erb (10.1ms)
+  [1m[35mStock Load (0.1ms)[0m  SELECT "stocks".* FROM "stocks" INNER JOIN "user_stocks" ON "stocks"."id" = "user_stocks"."stock_id" WHERE "user_stocks"."user_id" = ?  [["user_id", 1]]
+  Rendered stocks/_list.html.erb (6384.8ms)
+  Rendered users/my_portfolio.html.erb within layouts/application (6396.0ms)
+  Rendered layouts/_navigation.html.erb (1.0ms)
+Completed 200 OK in 6541ms (Views: 6538.3ms | ActiveRecord: 0.2ms)
+
+
+Started DELETE "/users/sign_out" for 127.0.0.1 at 2017-04-20 17:15:26 +0530
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"g7fl/aUSwWlqr2fgRuW235m/SKRUdECF92XMjWeLJ6c1fomu+qts+TV7IUzTuslkR8pCT49p04HulzYgopIRfQ=="}
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2017-04-20 17:15:26 +0530
+Processing by WelcomeController#index as HTML
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2017-04-20 17:15:26 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.html.erb (0.2ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (3.0ms)
+  Rendered layouts/_navigation.html.erb (0.4ms)
+Completed 200 OK in 144ms (Views: 142.4ms | ActiveRecord: 0.0ms)
