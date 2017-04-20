@@ -8,6 +8,7 @@ gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
 gem 'stock_quote'
+gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -48,7 +49,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg'
+  
   gem 'rails_12factor'
 end
 
